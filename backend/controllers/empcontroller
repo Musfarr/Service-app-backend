@@ -1,0 +1,39 @@
+
+const employe = require('../models/empmodel')
+
+
+
+const RegisterEmployee = async(req , res) =>{
+    
+    const{name , email , dob , address , number} = req.body
+
+    if(!name || !email || !dob || !address){
+        res.status(400).json({message : 'Incomplete Fields'})
+        return
+    }
+
+    var emp = await employe.create(
+        {name : name,
+         email : email,
+         dob : dob ,
+         address : address ,   
+         number : number
+        }
+    )
+
+    if(emp){
+    res.status(200).json({message : 'user created Successfully'})
+    }
+    else{
+        
+
+    }
+}
+
+const GetEmployees = async(req , res ) =>{
+    const emp = await employe.find()
+    res.status(200).json(emp)
+
+}
+
+module.exports = { RegisterEmployee , GetEmployees}
